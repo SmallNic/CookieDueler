@@ -45,14 +45,38 @@ app.post('/', function (req, res){
     if (err) return handleError(err);
   })
 
-
   Player.count({}, function( err, count){
     if (err) return handleError(err);
     if(count%2 ==0){
-      gameCount++
-      Game.create({num:gameCount}, function (err, results) {
+
+      // var player1
+      // var player2
+      //
+      Player.find({},"-_id name", { limit: 2, sort: { _id : -1 } }, function (err, players){
         if (err) return handleError(err);
+        // console.log("Player 1:", players[1].name)
+        var player1 = players[1].name
+        // console.log("Player 2:", players[0].name)
+        var player2 = players[0].name
+        // console.log("player1:", player1)
+        // console.log("player2:", player2)
+
+        gameCount++
+        Game.create({num:gameCount, player1:player1, player2:player2}, function (err, results) {
+          if (err) return handleError(err);
+          console.log("new game created")
+          console.log("gameNumber", results.num)
+          console.log("player1", results.player1)
+          console.log("player2", results.player2)
+        })
       })
+
+      // lastTwoPlayers.select("-_id name");
+      // lastTwoPlayers.exec(function (err, player) {
+      //   if (err) return handleError(err);
+      //   console.log("1:", player.name, "2:", player.name)
+      // })
+      // console.log(lastTwoPlayers)
     }
   })
 

@@ -1,8 +1,21 @@
 <h1>Cookie Dueler</h1>
 <main>
   <div class="row" id="welcome">
-    <h2 >Welcome, {{name}}</h2>
+    <h2 >Good luck, {{name}}</h2>
   </div>
+
+  <div class="row">
+    <div class="column column-5">
+        <p>{{name}}<p>
+    </div>
+    <div class="column column-2">
+      <p>Time</p>
+    </div>
+    <div class="column column-5">
+        <p>Opponenet<p>
+    </div>
+  </div>
+
 
   <div class="row">
     <div class="column column-5">
@@ -11,7 +24,7 @@
       </div>
     </div>
     <div class="column column-2">
-      <h3>Time</h3>
+      <button id="start">Start</button>
     </div>
     <div class="column column-5">
       <div class="opponentClickCounter">
@@ -24,8 +37,8 @@
     <div class="column column-5">
       <img src="/images/PerfectCookie.png" width="200" id="cookie"/>
     </div>
-    <div class="column column-2">
-      <p>00:00</p>
+    <div class="column column-2" id="countdown">
+      <p>01:00:00</p>
     </div>
     <div class="column column-5">
       <img src="/images/PerfectCookie.png" width="200"/>

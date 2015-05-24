@@ -29,6 +29,50 @@
       $("#cookie").attr("width", "200")
     })
 
+    var start = $("#start")
+    var countdown = $("#countdown")
+    start.on("click", startCountDown)
+
+    var intervalID;
+    var secondCounter = 0
+    var minuteCounter = 1
+    var hundredthSecondCounter = 0
+
+
+    function startCountDown() {
+      clearInterval(intervalID);
+      intervalID = setInterval(tick, 10)
+    }
+
+    function tick () {
+      countdown.text(leadingZero(minuteCounter) + ":" + leadingZero(secondCounter) + ":" + leadingZero(hundredthSecondCounter))
+
+      if (secondCounter === 0 && minuteCounter === 0 && hundredthSecondCounter === 0 ){
+        clearInterval(intervalID);
+        secondCounter = 0
+        minuteCounter = 1
+        countdown.text(leadingZero(minuteCounter) + ":" + leadingZero(secondCounter))
+      }
+      if (hundredthSecondCounter === 0 && secondCounter > 0) {
+        secondCounter --
+        hundredthSecondCounter = 99
+
+      }
+      if (hundredthSecondCounter === 0 && secondCounter === 0 && minuteCounter > 0) {
+        minuteCounter --
+        secondCounter = 59
+        hundredthSecondCounter = 99
+      }
+      hundredthSecondCounter --
+
+
+    }
+
+    function leadingZero(n){
+      return n > 9 ? n : "0" + n;
+    }
+
+
 
   })
 

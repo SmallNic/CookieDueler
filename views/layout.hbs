@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <title>Cookie Dueler</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  {{{body}}}
+</body>
+<script src = "https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!-- <script src = "../public/javascript/app.js"></script> -->
+<script>
+
+  $(document).ready(function(){
+
+    var counter = 0;
+
+    $("#cookie").on("click", function(){
+      counter ++
+      console.log("click")
+      $(".clickCounter").text(counter)
+    })
+
+    $("#cookie").on("mousedown", function(){
+      $("#cookie").attr("width", "190")
+    })
+
+    $("#cookie").on("mouseup", function(){
+      $("#cookie").attr("width", "200")
+    })
+
+
+  })
+
+</script>
+
+</html>

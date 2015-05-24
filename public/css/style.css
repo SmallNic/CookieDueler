@@ -1,0 +1,119 @@
+body {
+  background:#f2f2f2;
+}
+
+main {
+  text-align:center;
+  margin:0 auto;
+  width:80;
+  border:1px solid black;
+  border-radius:5px;
+  height:500px;
+}
+
+#welcome {
+  margin: 2%;
+  text-align: center;
+}
+
+.clickCounter, .opponentClickCounter{
+  margin:0 auto;
+  background:black;
+  color:green;
+  height:50px;
+  width:50px;
+  border-radius: 10px;
+  line-height: 50px;
+}
+
+p, h3 {
+  margin:0;
+  padding:0;
+}
+
+
+/************************GRIDS SETUP************************/
+.row,
+.column {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /*border:solid 1px red;*/
+
+}
+
+.row:before,
+.row:after {
+    content: " ";
+    display: table;
+}
+
+.row:after {
+    clear: both;
+}
+
+.column {
+    position: relative;
+    float: left;
+    height: 100%;
+}
+
+.column-1{
+  width: 8.3333333333333%;
+}
+
+.column-2{
+  width:16.6666666666667%;
+}
+
+.column-3{
+  width:25%;
+}
+
+.column-4{
+  width:33.3333333333333%;
+}
+
+.column-5{
+  width:41.6666666666667%
+}
+
+.column-6{
+  width:50%
+}
+
+.column-7{
+  width:58.3333333333333%;
+}
+
+.column-8{
+  width:66.6666666666667%;
+}
+
+.column-9{
+  width:75%
+}
+
+.column-10{
+  width:83.3333333333333%;
+}
+
+.column-11{
+  width:91.6666666666667%;
+}
+
+.column-12{
+  width:100%
+}
+
+.green {
+  background: green;
+}
+
+.blue{
+  background: blue;
+}
+
+.red{
+  background:red;
+}

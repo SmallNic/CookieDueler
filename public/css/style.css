@@ -16,7 +16,7 @@ main {
   text-align: center;
 }
 
-.clickCounter, .opponentClickCounter{
+.leftClickCounter, .rightClickCounter{
   margin:0 auto;
   background:black;
   color:green;

@@ -1,0 +1,9 @@
+function getGameNumber( Game ){
+  var gameNumber;
+  Game.count({}, function( err, count){
+    if (err) return handleError(err);
+    gameNumber = count
+    console.log(gameNumber)
+  })
+  return gameNumber
+}

@@ -1,25 +1,32 @@
+<script>
+
+
+
+</script>
+
+
 <h1>Cookie Dueler</h1>
 <main>
   <div class="row" id="welcome">
-    <h2 >Good luck, {{name}}</h2>
+    <h2 >Good luck</h2>
   </div>
 
   <div class="row">
     <div class="column column-5">
-        <p>{{name}}<p>
+        <p id="player1">{{leftName}}<p>
     </div>
     <div class="column column-2">
       <p>Time</p>
     </div>
     <div class="column column-5">
-        <p>Opponenet<p>
+        <p id="player2">{{rightName}}<p>
     </div>
   </div>
 
 
   <div class="row">
     <div class="column column-5">
-      <div class="clickCounter">
+      <div class="leftClickCounter">
         <p>0<p>
       </div>
     </div>
@@ -27,7 +34,7 @@
       <button id="start">Start</button>
     </div>
     <div class="column column-5">
-      <div class="opponentClickCounter">
+      <div class="rightClickCounter">
         <p>0<p>
       </div>
     </div>
@@ -35,13 +42,13 @@
 
   <div class="row">
     <div class="column column-5">
-      <img src="/images/PerfectCookie.png" width="200" id="cookie"/>
+      <img src="/images/PerfectCookie.png" width="200" id="leftCookie"/>
     </div>
     <div class="column column-2" id="countdown">
       <p>01:00:00</p>
     </div>
     <div class="column column-5">
-      <img src="/images/PerfectCookie.png" width="200"/>
+      <img src="/images/PerfectCookie.png" width="200" id="rightCookie"/>
     </div>
   </div>
 

@@ -1,40 +1,63 @@
+// Insantiate Express
 var express = require("express")
 var app = express()
 
+// Instantiate Socket.io
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
+
+
+
+
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
+
+// var http = require('http').Server(app);
+// console.log("http", http)
+// var io = require('socket.io')(http);
+// console.log("io", io)
+
+// var http = require('http').createServer(app);
+// var io  = require('socket.io').listen(http);
+
+// var app2 = require('express').createServer();
+// var io = require('socket.io')(app2);
+
+// var server = require('http').Server(app);
+// var io = require('socket.io')(server);
+
+// Instantiate Handlebars
 var hbs = require('hbs');
 app.set("view engine", "hbs");
 
+// Instantiate body parser
 var bodyParser = require("body-parser")
 app.use(bodyParser.json())//handles json POST requests
 app.use(bodyParser.urlencoded({ extended:true }) ) //handles form submissions
 
+// Set up path for assets
 app.use(express.static(__dirname + "/public"))
 
-// var mongoose = require('mongoose');
-// mongoose.createConnection('mongodb://localhost/cookie_dueler');
+//Connect to database
 var db = require("./config/db")
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// //once is the method that creates a connection to the db
-// db.once('open', function (callback){
-//   //from here we are in an open connection to the database
-//   console.log("Connection established to: ", db.name)
-// })
-
 var Game = require("./models/game")( db )
 var Player = require("./models/player")( db )
 
+//Initialize game counter
 var gameCount = 0
 
-
-app.listen(3000, function (){
+//Open server
+server.listen(3000, function (){
   console.log("Cookie Dueler server listening at http://localhost:3000/")
 })
 
+//Define route handler that gets called when we open home page
 app.get('/', function(req, res){
   res.render('index')
 })
 
+//Define route handler that gets called when we submit form from home page
 app.post('/', function (req, res){
   if(!req.body.name){
     res.send("Error: [name] is required.  Found: '" + Object.keys(req.body) + "'");
@@ -47,19 +70,12 @@ app.post('/', function (req, res){
 
   Player.count({}, function( err, count){
     if (err) return handleError(err);
-    if(count%2 ==0){
-
-      // var player1
-      // var player2
-      //
+    if(count%2 ==0 && count > 0){
+      console.log("count", count)
       Player.find({},"-_id name", { limit: 2, sort: { _id : -1 } }, function (err, players){
         if (err) return handleError(err);
-        // console.log("Player 1:", players[1].name)
         var player1 = players[1].name
-        // console.log("Player 2:", players[0].name)
         var player2 = players[0].name
-        // console.log("player1:", player1)
-        // console.log("player2:", player2)
 
         gameCount++
         Game.create({num:gameCount, player1:player1, player2:player2}, function (err, results) {
@@ -68,35 +84,37 @@ app.post('/', function (req, res){
           console.log("gameNumber", results.num)
           console.log("player1", results.player1)
           console.log("player2", results.player2)
+          // document.getElementById("#player1").text(results.player1)
+          // document.getElementById("#player2").text(results.player2)
+          res.render("welcome", {
+            leftName:results.player1,
+            rightName:results.player2
+          })
         })
       })
-
-      // lastTwoPlayers.select("-_id name");
-      // lastTwoPlayers.exec(function (err, player) {
-      //   if (err) return handleError(err);
-      //   console.log("1:", player.name, "2:", player.name)
-      // })
-      // console.log(lastTwoPlayers)
     }
   })
 
-  var game = {
-    num: getGameNumber( Game ),
-    player1: req.body.name,
-  }
 
-
-  res.render("welcome", {
-    name:req.body.name
-  })
+  // res.render("welcome")
 })
 
-function getGameNumber( Game ){
-  var gameNumber;
-  Game.count({}, function( err, count){
-    if (err) return handleError(err);
-    gameNumber = count
-    console.log(gameNumber)
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+
+  socket.on('leftClick', function( msg){
+    console.log("left cookie was clicked")
+    io.emit('leftClick')
   })
-  return gameNumber
-}
+
+  socket.on('rightClick', function( msg){
+    console.log("right cookie was clicked")
+    io.emit('rightClick')
+  })
+
+});

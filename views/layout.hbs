@@ -7,26 +7,69 @@
 <body>
   {{{body}}}
 </body>
-<script src = "https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../socket.io/socket.io.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <!-- <script src = "../public/javascript/app.js"></script> -->
 <script>
 
+
+
+
   $(document).ready(function(){
 
-    var counter = 0;
+    var leftCounter = 0;
+    var rightCounter = 0;
 
-    $("#cookie").on("click", function(){
-      counter ++
-      console.log("click")
-      $(".clickCounter").text(counter)
+    var socket = io();
+
+    $("#leftCookie").click(function(){
+      socket.emit('leftClick')
+      return false;
     })
 
-    $("#cookie").on("mousedown", function(){
-      $("#cookie").attr("width", "190")
+    socket.on('leftClick', function(){
+      leftCounter ++
+      $(".leftClickCounter").text(leftCounter)
     })
 
-    $("#cookie").on("mouseup", function(){
-      $("#cookie").attr("width", "200")
+    $("#rightCookie").click(function(){
+      socket.emit('rightClick')
+      return false;
+    })
+
+    socket.on('rightClick', function(){
+      rightCounter ++
+      $(".rightClickCounter").text(rightCounter)
+    })
+
+    // $("#leftCookie").on("click", function(){
+    //   leftCounter ++
+    //   console.log("leftClick")
+    //   $(".leftClickCounter").text(leftCounter)
+    // })
+
+    // $("#rightCookie").on("click", function(){
+    //   rightCounter ++
+    //   console.log("rightClick")
+    //   $(".rightClickCounter").text(rightCounter)
+    // })
+
+    $("#leftCookie").on("mousedown", function(){
+      $("#leftCookie").attr("width", "190")
+    })
+
+    $("#leftCookie").on("mouseup", function(){
+      $("#leftCookie").attr("width", "200")
+    })
+
+    $("#rightCookie").on("mousedown", function(){
+      $("#rightCookie").attr("width", "190")
+    })
+
+    $("#rightCookie").on("mouseup", function(){
+      $("#rightCookie").attr("width", "200")
     })
 
     var start = $("#start")
@@ -37,7 +80,6 @@
     var secondCounter = 0
     var minuteCounter = 1
     var hundredthSecondCounter = 0
-
 
     function startCountDown() {
       clearInterval(intervalID);
@@ -52,6 +94,9 @@
         secondCounter = 0
         minuteCounter = 1
         countdown.text(leadingZero(minuteCounter) + ":" + leadingZero(secondCounter))
+        
+
+
       }
       if (hundredthSecondCounter === 0 && secondCounter > 0) {
         secondCounter --
@@ -64,14 +109,11 @@
         hundredthSecondCounter = 99
       }
       hundredthSecondCounter --
-
-
     }
 
     function leadingZero(n){
       return n > 9 ? n : "0" + n;
     }
-
 
 
   })

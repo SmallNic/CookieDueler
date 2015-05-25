@@ -93,10 +93,16 @@ app.post('/', function (req, res){
         })
       })
     }
+    else{
+      res.render("welcome", {
+        leftName:"Waiting",
+        rightName:"Waiting on Opponent"
+      })
+    }
   })
 
 
-  // res.render("welcome")
+
 })
 
 
@@ -115,6 +121,22 @@ io.on('connection', function(socket){
   socket.on('rightClick', function( msg){
     console.log("right cookie was clicked")
     io.emit('rightClick')
+  })
+
+  socket.on('left wins', function(){
+    io.emit('left wins')
+  })
+
+  socket.on('right wins', function(){
+    io.emit('right wins')
+  })
+
+  socket.on('tie', function(){
+    io.emit('tie')
+  })
+
+  socket.on('count down', function(){
+    io.emit('count down')
   })
 
 });

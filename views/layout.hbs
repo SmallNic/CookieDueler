@@ -44,6 +44,19 @@
       $(".rightClickCounter").text(rightCounter)
     })
 
+    socket.on('left wins', function(){
+      $("#welcome").text("Left wins")
+    })
+
+    socket.on('right wins', function(){
+      $("#welcome").text("Right wins")
+    })
+
+    socket.on('tie', function(){
+      $("#welcome").text("Tie")
+    })
+
+
     // $("#leftCookie").on("click", function(){
     //   leftCounter ++
     //   console.log("leftClick")
@@ -72,13 +85,22 @@
       $("#rightCookie").attr("width", "200")
     })
 
-    var start = $("#start")
+
     var countdown = $("#countdown")
-    start.on("click", startCountDown)
+    // $("#start").on("click", startCountDown)
+
+    $("#start").click(function(){
+      socket.emit('count down')
+      return false;
+    })
+
+    socket.on('count down', function(){
+      startCountDown()
+    })
 
     var intervalID;
-    var secondCounter = 0
-    var minuteCounter = 1
+    var secondCounter = 10
+    var minuteCounter = 0
     var hundredthSecondCounter = 0
 
     function startCountDown() {
@@ -87,15 +109,21 @@
     }
 
     function tick () {
-      countdown.text(leadingZero(minuteCounter) + ":" + leadingZero(secondCounter) + ":" + leadingZero(hundredthSecondCounter))
+      countdown.text(leadingZero(secondCounter) + ":" + leadingZero(hundredthSecondCounter))
 
       if (secondCounter === 0 && minuteCounter === 0 && hundredthSecondCounter === 0 ){
         clearInterval(intervalID);
-        secondCounter = 0
-        minuteCounter = 1
-        countdown.text(leadingZero(minuteCounter) + ":" + leadingZero(secondCounter))
-        
-
+        secondCounter = 10
+        countdown.text(leadingZero(secondCounter) + ":" + leadingZero(hundredthSecondCounter))
+        if (leftCounter > rightCounter){
+          socket.emit('left wins')
+        }
+        else if (rightCounter > leftCounter){
+          socket.emit('right wins')
+        }
+        else {
+          socket.emit('tie')
+        }
 
       }
       if (hundredthSecondCounter === 0 && secondCounter > 0) {
@@ -103,11 +131,11 @@
         hundredthSecondCounter = 99
 
       }
-      if (hundredthSecondCounter === 0 && secondCounter === 0 && minuteCounter > 0) {
-        minuteCounter --
-        secondCounter = 59
-        hundredthSecondCounter = 99
-      }
+      // if (hundredthSecondCounter === 0 && secondCounter === 0) {
+      //   minuteCounter --
+      //   secondCounter = 59
+      //   hundredthSecondCounter = 99
+      // }
       hundredthSecondCounter --
     }
 

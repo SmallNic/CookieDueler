@@ -31,6 +31,11 @@ p, h3 {
   padding:0;
 }
 
+#leftCookie, #rightCookie{
+  cursor: pointer;
+  cursor: hand; 
+}
+
 
 /************************GRIDS SETUP************************/
 .row,

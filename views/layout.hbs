@@ -7,8 +7,8 @@
 <body>
   {{{body}}}
 </body>
-<script src="/socket.io/socket.io.js"></script>
-<script src="../socket.io/socket.io.js"></script>
+<!-- <script src="/socket.io/socket.io.js"></script>
+<script src="../socket.io/socket.io.js"></script> -->
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <!-- <script src = "../public/javascript/app.js"></script> -->
@@ -46,10 +46,12 @@
 
     socket.on('left wins', function(){
       $("#welcome").text("Left wins")
+      $("#leftCookie").attr("width", "300")
     })
 
     socket.on('right wins', function(){
       $("#welcome").text("Right wins")
+      $("#rightCookie").attr("width", "300")
     })
 
     socket.on('tie', function(){

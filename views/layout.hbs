@@ -24,19 +24,22 @@
 
     var socket = io();
 
+
+    // Initialize socket emit
     $("#leftCookie").click(function(){
       socket.emit('leftClick')
       return false;
     })
 
-    socket.on('leftClick', function(){
-      leftCounter ++
-      $(".leftClickCounter").text(leftCounter)
-    })
-
     $("#rightCookie").click(function(){
       socket.emit('rightClick')
       return false;
+    })
+
+    //Update DOM after Socket Emit
+    socket.on('leftClick', function(){
+      leftCounter ++
+      $(".leftClickCounter").text(leftCounter)
     })
 
     socket.on('rightClick', function(){
@@ -58,19 +61,7 @@
       $("#welcome").text("Tie")
     })
 
-
-    // $("#leftCookie").on("click", function(){
-    //   leftCounter ++
-    //   console.log("leftClick")
-    //   $(".leftClickCounter").text(leftCounter)
-    // })
-
-    // $("#rightCookie").on("click", function(){
-    //   rightCounter ++
-    //   console.log("rightClick")
-    //   $(".rightClickCounter").text(rightCounter)
-    // })
-
+    //Change cookie size on click
     $("#leftCookie").on("mousedown", function(){
       $("#leftCookie").attr("width", "190")
     })
@@ -88,8 +79,21 @@
     })
 
 
+    $("#refresh").click(function(){
+      socket.emit('refresh')
+      return false;
+    })
+
+    socket.on('refresh', function(){
+      leftCounter = 0
+      rightCounter = 0
+      $(".leftClickCounter").text(0)
+      $(".rightClickCounter").text(0)
+      countdown.text("10:00")
+    })
+
+
     var countdown = $("#countdown")
-    // $("#start").on("click", startCountDown)
 
     $("#start").click(function(){
       socket.emit('count down')

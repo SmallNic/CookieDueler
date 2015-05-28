@@ -9,19 +9,19 @@ var io = require('socket.io')(server);
 // var http = require('http').Server(app);
 // var io = require('socket.io')(http);
 
-// var http = require('http').Server(app);
-// console.log("http", http)
-// var io = require('socket.io')(http);
-// console.log("io", io)
 
-// var http = require('http').createServer(app);
-// var io  = require('socket.io').listen(http);
 
-// var app2 = require('express').createServer();
-// var io = require('socket.io')(app2);
 
-// var server = require('http').Server(app);
-// var io = require('socket.io')(server);
+
+// io = require('socket.io').listen(port);
+//Configue io to work with heroku
+io.configure(function () {
+    io.set("transports", ["xhr-polling"]);
+    io.set("polling duration", 10);
+});
+
+
+
 
 // Instantiate Handlebars
 var hbs = require('hbs');
@@ -100,7 +100,6 @@ app.get('/', function (req, res){
   //
 
 })
-
 
 io.on('connection', function(socket){
   console.log('a user connected');

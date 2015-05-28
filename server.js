@@ -36,9 +36,9 @@ app.use(bodyParser.urlencoded({ extended:true }) ) //handles form submissions
 app.use(express.static(__dirname + "/public"))
 
 //Connect to database
-var db = require("./config/db")
-var Game = require("./models/game")( db )
-var Player = require("./models/player")( db )
+// var db = require("./config/db")
+// var Game = require("./models/game")( db )
+// var Player = require("./models/player")( db )
 
 //Initialize game counter
 var gameCount = 0

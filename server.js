@@ -27,7 +27,7 @@ app.use(express.static(__dirname + "/public"))
 var gameCount = 0
 
 //Open server
-app.listen(process.env.PORT || 3000, function(){
+server.listen(process.env.PORT || 3000, function(){
   console.log("Cookie Dueler server listening at http://localhost:3000/")
 })
 

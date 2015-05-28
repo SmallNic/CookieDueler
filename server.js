@@ -44,7 +44,7 @@ var Player = require("./models/player")( db )
 var gameCount = 0
 
 //Open server
-server.listen(3000, function (){
+app.listen(process.env.PORT || 3000, function(){
   console.log("Cookie Dueler server listening at http://localhost:3000/")
 })
 
